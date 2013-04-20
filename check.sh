@@ -29,9 +29,10 @@ else
         echo "1 $TS" > $STATUS_FILE
     else
         RUNS=`tail -n 1 $STATUS_FILE | awk '{ print $1 }'`
-        if [ "$RUNS" -ge "5" ];
+        # Remember that if it's been executed 4 times already, this is
+        # the fifth and we should send out the special run email.
+        if [ "$RUNS" -ge "4" ];
         then
-            echo "Whoa there! Too many runs!"
             echo "$SPECIAL_RUN_CONTENT" | mail -s "$SPECIAL_RUN_SUBJECT" "$SPECIAL_RUN_MAIL"
         fi
         echo "$((RUNS+1)) $TS" >> $STATUS_FILE

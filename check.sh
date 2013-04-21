@@ -1,7 +1,12 @@
 #/bin/bash
-# Print out (eventually email) every time ran; if executed more than
-# five times in five minutes, then print out (/email) an additional
-# message.
+# Email for every time ran; if executed more than five times in five
+# minutes, then email an additional message.
+#
+# $STATUS_FILE should contain a number of lines, each one corresponding
+# to a run number and the timestamp it started at.
+#
+# If the first run in a set happened earlier than 5 minutes before this
+# run, we just remove it and start over again.
 
 # Configs.
 STATUS_FILE="./.status"
@@ -26,6 +31,8 @@ else
     CTIME=$((`head -n 1 $STATUS_FILE | awk '{ print $2 }'`))
     if [ "$CTIME" -lt "$ETIME" ];
     then
+        # Reset the status file to reflect that we're tracking a new
+        # five-minute interval.
         echo "1 $TS" > $STATUS_FILE
     else
         RUNS=`tail -n 1 $STATUS_FILE | awk '{ print $1 }'`

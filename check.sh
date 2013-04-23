@@ -19,8 +19,8 @@ SPECIAL_RUN_SUBJECT="Whoa! Too Many Runs!"
 SPECIAL_RUN_MAIL="arian@localhost"
 SPECIAL_RUN_CONTENT="Someone's run the script too many times in 5 minutes."
 
-echo $NORMAL_RUN_CONTENT
-#echo "$NORMAL_RUN_CONTENT" | mail -s "$NORMAL_RUN_SUBJECT" "$NORMAL_RUN_MAIL"
+#echo $NORMAL_RUN_CONTENT
+echo "$NORMAL_RUN_CONTENT" | mail -s "$NORMAL_RUN_SUBJECT" "$NORMAL_RUN_MAIL"
 if [[ ! -f $STATUS_FILE ]];
 then
     # Store the time of each run so that subsequent runs can determine
@@ -57,8 +57,8 @@ else
         # 4 runs have already happened, so this is the fifth.
         if [ "$PASTRUNS" -ge "4" ];
         then
-            echo $SPECIAL_RUN_CONTENT
-            #echo "$SPECIAL_RUN_CONTENT" | mail -s "$SPECIAL_RUN_SUBJECT" "$SPECIAL_RUN_MAIL"
+            #echo $SPECIAL_RUN_CONTENT
+            echo "$SPECIAL_RUN_CONTENT" | mail -s "$SPECIAL_RUN_SUBJECT" "$SPECIAL_RUN_MAIL"
         fi
         echo "$((LAST_RUN+1)) $TS" >> $STATUS_FILE
     fi

@@ -10,7 +10,7 @@
 
 # Configs.
 STATUS_FILE="./.status"
-TS=`date +%s`
+TS=`date -u +%s`
 NORMAL_RUN_SUBJECT="A Normal Script Run."
 NORMAL_RUN_MAIL="arian@localhost"
 NORMAL_RUN_CONTENT="Here would be a report, or a status update."
@@ -27,7 +27,7 @@ then
 else
     # We base our 5-minutes off of when the file was created, which
     # will be the first entry in the list.
-    ETIME=$((`date +%s`-300))
+    ETIME=$((`date -u +%s`-300))
     CTIME=$((`head -n 1 $STATUS_FILE | awk '{ print $2 }'`))
     if [ "$CTIME" -lt "$ETIME" ];
     then
